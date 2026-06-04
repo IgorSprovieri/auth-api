@@ -4,6 +4,8 @@ interface IUser {
   name: string;
   email: string;
   password: string;
+  failedLoginAttempts: number;
+  lockUntil: Date | null;
 }
 
 export class UserModel {
@@ -20,6 +22,14 @@ export class UserModel {
     password: {
       type: String,
       required: true,
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    lockUntil: {
+      type: Date,
+      default: null,
     },
   });
 

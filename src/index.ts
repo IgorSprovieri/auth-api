@@ -9,6 +9,7 @@ import { UserModel } from "./models/users";
 import { Jwt } from "./auth/jwt";
 import { ErrorMiddleware } from "./errors/error.middleware";
 import { HealthController } from "./health/health.controller";
+import { LoginRateLimit } from "./auth/rateLimit";
 
 class Server {
   constructor(
@@ -50,8 +51,14 @@ const userModel = new UserModel();
 const authController = new AuthController(jwt, userModel);
 const authMiddleware = new AuthMiddleware(jwt);
 const healthController = new HealthController(database);
+const loginRateLimit = new LoginRateLimit();
 
-const router = new Router(authController, healthController, authMiddleware);
+const router = new Router(
+  authController,
+  healthController,
+  authMiddleware,
+  loginRateLimit,
+);
 
 const errorMiddleware = new ErrorMiddleware();
 const server = new Server(app, router, env, database, errorMiddleware);
