@@ -4,10 +4,6 @@ interface IUser {
   name: string;
   email: string;
   password: string;
-  reset_password_token: string | null;
-  reset_password_created_at: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export class UserModel {
@@ -24,22 +20,6 @@ export class UserModel {
     password: {
       type: String,
       required: true,
-    },
-    reset_password_token: {
-      type: String,
-      default: null,
-    },
-    reset_password_created_at: {
-      type: Date,
-      default: null,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
     },
   });
 
