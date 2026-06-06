@@ -9,8 +9,8 @@ export class AuthController {
     "$2b$12$QY9d3yM2DqL7rW4hR7jVPe7Q7mY1Nn2v6N5m5aQxM1uM8gA2tWz6K";
 
   constructor(
-    private jwt: Jwt,
-    private userModel: UserModel,
+    private readonly jwt: Jwt,
+    private readonly userModel: UserModel,
   ) {}
 
   async login(req: Request, res: Response) {
@@ -70,5 +70,9 @@ export class AuthController {
     };
 
     return res.json({ user: userResponse, token });
+  }
+
+  async getJwk(req: Request, res: Response) {
+    return res.json(this.jwt.getPublicTokenJwk());
   }
 }

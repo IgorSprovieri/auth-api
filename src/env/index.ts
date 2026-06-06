@@ -1,21 +1,30 @@
 import "dotenv/config";
 
-export class Env {
+export type EnvType = {
   PORT: number;
-  DB_URL: string;
-  JWT_SECRET: string;
+  MONGO_DB_URL: string;
+  REDIS_DB_URL: string;
+};
+
+export class Env {
+  PORT!: number;
+  MONGO_DB_URL!: string;
+  REDIS_DB_URL!: string;
 
   constructor() {
-    if (!process.env.DB_URL) {
-      throw new Error("DB_URL is not set in .env file");
-    }
+    const defaultValues = {
+      PORT: 3333,
+    };
 
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET is not set in .env file");
-    }
+    Object.keys(this).forEach((k) => {
+      const key = k as keyof typeof defaultValues;
 
-    this.PORT = Number(process.env.PORT) || 3333;
-    this.DB_URL = process.env.DB_URL;
-    this.JWT_SECRET = process.env.JWT_SECRET;
+      if (!process.env[key] && !defaultValues[key]) {
+        throw new Error(`${key} is not set in .env file`);
+      }
+
+      (this as Record<keyof EnvType, string | number>)[key] =
+        process.env[key] || defaultValues[key];
+    });
   }
 }

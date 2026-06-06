@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { Env } from "../env";
 
-export class Database {
-  constructor(private env: Env) {}
+export class MongoDB {
+  constructor(private readonly env: Env) {}
 
   async connect() {
-    mongoose.connect(this.env.DB_URL);
+    mongoose.connect(this.env.MONGO_DB_URL);
     console.log("MongoDB connected");
   }
 

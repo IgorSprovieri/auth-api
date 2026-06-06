@@ -3,7 +3,7 @@ import { Jwt } from "./jwt";
 import { AppError } from "../errors/appError";
 
 export class AuthMiddleware {
-  constructor(private jwt: Jwt) {}
+  constructor(private readonly jwt: Jwt) {}
 
   async execute(req: Request, res: Response, next: NextFunction) {
     const header = req.headers.authorization;
