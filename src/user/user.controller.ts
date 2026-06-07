@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models/users";
+import { UserModel } from "./user.model";
 import { AppError } from "../errors/appError";
 
 export class UserController {

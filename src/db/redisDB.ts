@@ -1,5 +1,8 @@
 import { createClient, RedisClientType } from "redis";
 import { Env } from "../env";
+import { logger } from "../logger";
+
+const dbLogger = logger.child({ module: "redis" });
 
 export class RedisDB {
   private redis: RedisClientType;
@@ -12,7 +15,7 @@ export class RedisDB {
 
   async connect() {
     await this.redis.connect();
-    console.log("RedisDB connected");
+    dbLogger.info("connected");
   }
 
   async sendCommand<Type>(args: string[]): Promise<Type> {

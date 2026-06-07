@@ -4,12 +4,14 @@ export type EnvType = {
   PORT: number;
   MONGO_DB_URL: string;
   REDIS_DB_URL: string;
+  NODE_ENV: string;
 };
 
 export class Env {
   PORT!: number;
   MONGO_DB_URL!: string;
   REDIS_DB_URL!: string;
+  NODE_ENV!: string;
 
   constructor() {
     const defaultValues = {

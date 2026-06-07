@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import { Jwt } from "./jwt";
-import { UserModel } from "../models/users";
+import { UserModel } from "../user/user.model";
 import { AppError } from "../errors/appError";
 
 export class AuthController {

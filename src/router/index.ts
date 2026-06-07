@@ -3,7 +3,7 @@ import { AuthController } from "../auth/auth.controller";
 import { AuthMiddleware } from "../auth/auth.middleware";
 import { HealthController } from "../health/health.controller";
 import { LoginRateLimit } from "../auth/rateLimit";
-import { UserController } from "../user";
+import { UserController } from "../user/user.controller";
 
 export class Router {
   private readonly router = ExpressRouter();
