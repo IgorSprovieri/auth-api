@@ -3,6 +3,7 @@ import { AuthController } from "../auth/auth.controller";
 import { AuthMiddleware } from "../auth/auth.middleware";
 import { HealthController } from "../health/health.controller";
 import { LoginRateLimit } from "../auth/rateLimit";
+import { UserController } from "../user";
 
 export class Router {
   private readonly router = ExpressRouter();
@@ -12,6 +13,7 @@ export class Router {
     private healthController: HealthController,
     private authMiddleware: AuthMiddleware,
     private loginRateLimit: LoginRateLimit,
+    private userController: UserController,
   ) {}
 
   setup() {
@@ -32,6 +34,11 @@ export class Router {
     );
 
     this.router.use(this.authMiddleware.execute.bind(this.authMiddleware));
+
+    this.router.get(
+      "/user",
+      this.userController.getUser.bind(this.userController),
+    );
   }
 
   getRouter() {

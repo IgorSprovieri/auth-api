@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Jwt } from "./jwt";
+import { Jwt, JwtPayload } from "./jwt";
 import { AppError } from "../errors/appError";
 
 export class AuthMiddleware {
@@ -16,7 +16,7 @@ export class AuthMiddleware {
 
     try {
       const decoded = await this.jwt.verifyToken(token);
-      (req as any).user = decoded;
+      req.userId = (decoded as JwtPayload).userId;
       next();
     } catch {
       throw new AppError("Invalid token", 403);

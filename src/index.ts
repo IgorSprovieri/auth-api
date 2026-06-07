@@ -11,6 +11,7 @@ import { ErrorMiddleware } from "./errors/error.middleware";
 import { HealthController } from "./health/health.controller";
 import { LoginRateLimit } from "./auth/rateLimit";
 import { RedisDB } from "./db/redisDB";
+import { UserController } from "./user";
 
 class Server {
   constructor(
@@ -58,12 +59,14 @@ const authController = new AuthController(jwt, userModel);
 const authMiddleware = new AuthMiddleware(jwt);
 const healthController = new HealthController(mongoDB, redisDB);
 const loginRateLimit = new LoginRateLimit(redisDB);
+const userController = new UserController(userModel);
 
 const router = new Router(
   authController,
   healthController,
   authMiddleware,
   loginRateLimit,
+  userController,
 );
 
 const errorMiddleware = new ErrorMiddleware();

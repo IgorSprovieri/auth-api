@@ -62,7 +62,9 @@ export class AuthController {
       },
     );
 
-    const token = await this.jwt.signToken({ id: userFound._id });
+    const token = await this.jwt.signToken({
+      userId: userFound._id.toHexString(),
+    });
 
     const userResponse = {
       name: userFound.name,

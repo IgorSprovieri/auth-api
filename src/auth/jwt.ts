@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 
 export interface JwtPayload {
-  id: string;
+  userId: string;
 }
 
 export class Jwt {
@@ -18,7 +18,7 @@ export class Jwt {
     this.publicKey = fs.readFileSync(path.join(keysDir, "public.key"));
   }
 
-  async signToken<Payload extends object>(payload: Payload) {
+  async signToken(payload: JwtPayload) {
     return jwt.sign(payload, this.privateKey, {
       expiresIn: "1h",
       algorithm: "RS256",
