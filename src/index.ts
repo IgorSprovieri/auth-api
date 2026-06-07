@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+
 import { Env } from "./env";
 import { Router } from "./router";
 import { AuthController } from "./auth/auth.controller";
@@ -14,6 +15,7 @@ import { RedisDB } from "./db/redisDB";
 import { UserController } from "./user/user.controller";
 import { pinoHttp } from "pino-http";
 import { logger } from "./logger";
+import { setupSwagger } from "./swagger";
 
 class Server {
   constructor(
@@ -48,6 +50,8 @@ class Server {
     await this.mongoDB.connect();
     await this.redisDB.connect();
 
+    const docsUrl = setupSwagger(this.app, this.env.PORT);
+
     this.router.setup();
     this.app.use(this.router.getRouter());
     this.app.use(this.errorMiddleware.execute);
@@ -55,7 +59,10 @@ class Server {
     const server = this.app.listen(this.env.PORT);
 
     server.on("listening", () => {
-      logger.info({ port: this.env.PORT }, "Server running");
+      logger.info(
+        { port: this.env.PORT, docs: docsUrl },
+        `Server running — Swagger docs: ${docsUrl}`,
+      );
     });
 
     server.on("error", (err: NodeJS.ErrnoException) => {
